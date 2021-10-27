@@ -1,17 +1,18 @@
 import sys
-from os import system
 
 class Person:
     def __init__(self,name,gender):
         self.name=name
         self.gender=gender
 
+#initialize Males Features in Family Tree
 class Male(Person):
     def __init__(self,name):
         Person.__init__(self,name,"Male")
         self.husbandOf=None
         self.sonOf=None             
-    
+        
+#initialize Females Features in Family Tree
 class Female(Person):
     def __init__(self,name):
         Person.__init__(self,name,"Female")
@@ -19,7 +20,7 @@ class Female(Person):
         self.daughterOf=None        
         self.children=list()        
 
-#Make Queen Anga and King Shan as root of all the family tree
+#Make Queen Anga and King Shan as root of all the Family
 def initiateRoot(root,husbandName,wifeName):
     husband=Male(husbandName)
     wife=Female(wifeName)
@@ -27,7 +28,7 @@ def initiateRoot(root,husbandName,wifeName):
     wife.wifeOf = husband
     return wife
 
-#returns pointer of the node corresponding to person designation
+#returns pointer of the node corresponding to personName
 def findPerson(root,PersonName):
     if root == None:
         return None
@@ -54,7 +55,7 @@ def findPerson(root,PersonName):
                     resultPerson=findPerson(x,PersonName)
                     if resultPerson != None:
                         return resultPerson
-                # if not found just return a None
+                # if not found just return a None 
                 return None
             
 def addHusband(root,brideName,groomName):
@@ -78,7 +79,7 @@ def addWife(root,groomName,brideName):
         target.husbandOf=bride
     return root
 
-# to check if print is False required for the buldtree to properly message decaltion
+# to check if print is False required for the buldtree to properly message Declaration
 def printer(str,noPrint):
     if noPrint == False:
         print(str)
@@ -262,6 +263,7 @@ def getRelationShip(root,name,relationName):
     if target == None:
         print("PERSON_NOT_FOUND",end=" ")
     else:
+        #create Dictionary to get the data in right Place
         methodDict={"Paternal-Uncle":"getPaternalUncle(root,target)",
                     "Maternal-Uncle":"getMaternalUncle(root,target)",
                     "Paternal-Aunt":"getPaternalAunt(root,target)",
@@ -285,6 +287,7 @@ def addWifeBulk(root,CoupleDict):
         root=addWife(root,x,CoupleDict[x])
     return root
 
+# Build Tree Gathering all the requirments
 def buildtree(root):
     kids={"Chit":"Male","Ish":"Male","Vich":"Male","Aras":"Male","Satya":"Female"}
     root=addChildBulk(root,"Queen Anga",kids)
