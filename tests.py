@@ -1,3 +1,4 @@
+from tests import *
 import unittest
   
 class TestStringMethods(unittest.TestCase):
