@@ -6,9 +6,23 @@ class TestStringMethods(unittest.TestCase):
     def setUp(self):
         pass
   
-    # Returns True if the string contains 4 a.
     def test_strings_a(self):
         self.assertEqual( 'a'*4, 'aaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*5, 'aaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*6, 'aaaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*7, 'aaaaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*8, 'aaaaaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*9, 'aaaaaaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*10, 'aaaaaaaaaa')
+    def test_strings_a(self):
+        self.assertEqual( 'a'*11, 'aaaaaaaaaaa')
+        
   
     # Returns True if the string is in upper case.
     def test_upper(self):        
@@ -46,7 +60,7 @@ class TestStringMethods(unittest.TestCase):
         # check that s.split fails when the separator is not a string
         with self.assertRaises(TypeError):
             s.split(2)
-    
+            
   
 if __name__ == '__main__':
     unittest.main()
