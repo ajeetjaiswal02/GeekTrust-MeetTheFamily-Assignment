@@ -1,32 +1,8 @@
 import sys
+from person import *
+from familytree import *
+from familyaddition import *
 
-class Person:
-    """
-    Construct Family Tree Layout
-    
-    """
-    def __init__(self,name,gender):
-        self.name=name
-        self.gender=gender
-
-class Male(Person):
-    """
-    Construct male role in the tree
-    """
-    def __init__(self,name):
-        Person.__init__(self,name,"Male")
-        self.husbandOf=None
-        self.sonOf=None             
-        
-class Female(Person):
-    """
-    Construct Female role in the tree
-    """
-    def __init__(self,name):
-        Person.__init__(self,name,"Female")
-        self.wifeOf=None
-        self.daughterOf=None        
-        self.children=list()        
 
 def initiateRoot(root,husbandName,wifeName):
     """
@@ -38,103 +14,6 @@ def initiateRoot(root,husbandName,wifeName):
     husband.husbandOf = wife
     wife.wifeOf = husband
     return wife
-
-def findPerson(root,PersonName):
-    """
-    Returns pointer of the node corresponding to person Name
-    """
-    if root == None:
-        return None
-    else:
-        if root.name == PersonName:
-            return root
-        else:
-            if root.gender == "Female":
-                if root.wifeOf != None:
-                    if root.wifeOf.name==PersonName:
-                        return root.wifeOf
-            else:
-                if root.husbandOf == None:
-                    return None
-                else:
-                    root = root.husbandOf
-                    if root.name == PersonName:
-                        return root
-            
-            if len(root.children)==0:
-                    return None
-            else:
-                for x in root.children:
-                    resultPerson=findPerson(x,PersonName)
-                    if resultPerson != None:
-                        return resultPerson
-                """
-                if not found just return a None 
-                """
-                return None
-            
-def addHusband(root,brideName,groomName):
-    """
-    new wedding in family, groom is new person in family
-    :param groom: member of the family, who is going to get married
-    :param bridename: new person who is going to get married to family member and going to added in family
-    """
-    target=findPerson(root,brideName)
-    if target==None:
-        return root
-    else:
-        groom=Male(groomName)
-        groom.husbandOf=target
-        target.wifeOf=groom
-    
-    return root
-
-
-
-def addWife(root,groomName,brideName):
-    """
-    new wedding in family, spouse is new person in family
-        :param spouse: new person who is going to get married to family member and going to added in family
-    """
-    target=findPerson(root,groomName)
-    if target == None:
-        return root
-    else:
-        bride=Female(brideName)
-        bride.wifeOf=target
-        target.husbandOf=bride
-    return root
-
-def printer(str,noPrint):
-    """
-    To check if print is False required for the buldtree to properly message Declaration
-    """
-    if noPrint == False:
-        print(str)
-
-def addChild(root,motherName,childName,gender,noPrint):
-    if gender != "Male" and gender != "Female":
-        printer("CHILD_ADDITION_FAILED",noPrint)
-    else:
-        target=findPerson(root,motherName)
-        if target==None:
-            printer("PERSON_NOT_FOUND",noPrint)
-        else:
-            if target.gender == "Male":
-                printer("CHILD_ADDITION_FAILED",noPrint)
-            elif target.wifeOf==None:
-                printer("CHILD_ADDITION_FAILED",noPrint)
-            else:
-                if gender == "Male":
-                    son=Male(childName)
-                    son.sonOf=target
-                    target.children.append(son)
-                else:
-                    daughter=Female(childName)
-                    daughter.daughterOf=target
-                    target.children.append(daughter)
-                printer("CHILD_ADDITION_SUCCEEDED",noPrint)
-    return root
 
 
 def printList(lst):
@@ -306,51 +185,8 @@ def getRelationShip(root,name,relationName):
                     "Siblings":"getSiblings(root,target)"}
         eval(methodDict[relationName])
         
-def addChildBulk(root,motherName,childDict):
-    kidsKeys=childDict.keys()
-    for x in kidsKeys:
-        root=addChild(root,motherName,x.strip(),childDict[x],True)
-    return root
-
-def addWifeBulk(root,CoupleDict):
-    wifeKeys=CoupleDict.keys()
-    for x in wifeKeys:
-        root=addWife(root,x,CoupleDict[x])
-    return root
 
 # Build Tree Gathering all the requirments
-def buildtree(root):
-    kids={"Chit":"Male","Ish":"Male","Vich":"Male","Aras":"Male","Satya":"Female"}
-    root=addChildBulk(root,"Queen Anga",kids)
-    Couples={"Chit":"Amba","Vich":"Lika","Aras":"Chitra"}
-    root=addWifeBulk(root,Couples)
-    root=addHusband(root,"Satya","Vyan")
-    kids={}
-    kids={"Dritha":"Female","Tritha":"Female","Vritha":"Male"}
-    root=addChildBulk(root,"Amba",kids)
-    root=addHusband(root,"Dritha","Jaya")
-    kids={}
-    kids={"Vila":"Female","Chika":"Female"}
-    root=addChildBulk(root,"Lika",kids)
-    kids={}
-    kids={"Jnki":"Female","Ahit":"Male"}
-    root=addChildBulk(root,"Chitra",kids)
-    root=addHusband(root,"Jnki","Arit")
-    kids={}
-    kids={"Asva":"Male","Vyas":"Male","Atya":"Female"}
-    root=addChildBulk(root,"Satya",kids)
-    Couples={}
-    Couples={"Asva":"Satvy","Vyas":"Krpi"}
-    root=addWifeBulk(root,Couples)
-    root=addChild(root,"Dritha","Yodhan","Male",True)
-    kids={}
-    kids={"Laki":"Male","Lavnya":"Female"}
-    root=addChildBulk(root,"Jnki",kids)
-    root=addChild(root,"Satvy","Vasa","Male",True)
-    kids={}
-    kids={"Kriya":"Male","Krithi":"Female"}
-    root=addChildBulk(root,"Krpi",kids)
-    return root
 
 if __name__=="__main__":
     root=None
