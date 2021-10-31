@@ -1,35 +1,48 @@
 import sys
 
 class Person:
+    """
+    Construct Family Tree Layout
+    
+    """
     def __init__(self,name,gender):
         self.name=name
         self.gender=gender
 
-#initialize Males Features in Family Tree
 class Male(Person):
+    """
+    Construct male role in the tree
+    """
     def __init__(self,name):
         Person.__init__(self,name,"Male")
         self.husbandOf=None
         self.sonOf=None             
         
-#initialize Females Features in Family Tree
 class Female(Person):
+    """
+    Construct Female role in the tree
+    """
     def __init__(self,name):
         Person.__init__(self,name,"Female")
         self.wifeOf=None
         self.daughterOf=None        
         self.children=list()        
 
-#Make Queen Anga and King Shan as root of all the Family
 def initiateRoot(root,husbandName,wifeName):
+    """
+    Make Queen Anga and King Shan as root of all the Family
+
+    """
     husband=Male(husbandName)
     wife=Female(wifeName)
     husband.husbandOf = wife
     wife.wifeOf = husband
     return wife
 
-#returns pointer of the node corresponding to personName
 def findPerson(root,PersonName):
+    """
+    Returns pointer of the node corresponding to person Name
+    """
     if root == None:
         return None
     else:
@@ -55,10 +68,17 @@ def findPerson(root,PersonName):
                     resultPerson=findPerson(x,PersonName)
                     if resultPerson != None:
                         return resultPerson
-                # if not found just return a None 
+                """
+                if not found just return a None 
+                """
                 return None
             
 def addHusband(root,brideName,groomName):
+    """
+    new wedding in family, groom is new person in family
+    :param groom: member of the family, who is going to get married
+    :param bridename: new person who is going to get married to family member and going to added in family
+    """
     target=findPerson(root,brideName)
     if target==None:
         return root
@@ -69,7 +89,13 @@ def addHusband(root,brideName,groomName):
     
     return root
 
+
+
 def addWife(root,groomName,brideName):
+    """
+    new wedding in family, spouse is new person in family
+        :param spouse: new person who is going to get married to family member and going to added in family
+    """
     target=findPerson(root,groomName)
     if target == None:
         return root
@@ -79,8 +105,10 @@ def addWife(root,groomName,brideName):
         target.husbandOf=bride
     return root
 
-# to check if print is False required for the buldtree to properly message Declaration
 def printer(str,noPrint):
+    """
+    To check if print is False required for the buldtree to properly message Declaration
+    """
     if noPrint == False:
         print(str)
 
@@ -108,8 +136,11 @@ def addChild(root,motherName,childName,gender,noPrint):
                 printer("CHILD_ADDITION_SUCCEEDED",noPrint)
     return root
 
-#when a list is passed , it will print the list if not empty, otherwise NONE will be printed
+
 def printList(lst):
+    """
+    when a list is passed , it will print the list if not empty, otherwise NONE will be printed
+    """
     if len(lst) == 0:
         print("NONE",end=" ")
     else:
